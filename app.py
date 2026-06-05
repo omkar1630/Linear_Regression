@@ -6,14 +6,39 @@ import pandas as pd
 with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
-st.title("Student Performance Prediction")
+st.set_page_config(
+    page_title="Student Performance Prediction",
+    page_icon="📚"
+)
 
-hours_studied = st.number_input("Hours Studied", min_value=0.0)
-previous_scores = st.number_input("Previous Scores", min_value=0.0)
-sleep_hours = st.number_input("Sleep Hours", min_value=0.0)
+st.title("📚 Student Performance Prediction")
+st.write("Enter the student details below to predict the Performance Index.")
+
+hours_studied = st.number_input(
+    "Hours Studied",
+    min_value=0.0,
+    max_value=24.0,
+    value=5.0
+)
+
+previous_scores = st.number_input(
+    "Previous Scores",
+    min_value=0.0,
+    max_value=100.0,
+    value=70.0
+)
+
+sleep_hours = st.number_input(
+    "Sleep Hours",
+    min_value=0.0,
+    max_value=24.0,
+    value=7.0
+)
+
 papers_practiced = st.number_input(
     "Sample Question Papers Practiced",
-    min_value=0
+    min_value=0,
+    value=5
 )
 
 if st.button("Predict Performance"):
@@ -27,6 +52,8 @@ if st.button("Predict Performance"):
 
     prediction = model.predict(input_data)
 
+    performance = float(prediction[0])
+
     st.success(
-        f"Predicted Performance Index: {prediction[0]:.2f}"
+        f"Predicted Performance Index: {performance:.2f}"
     )
