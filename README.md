@@ -3,6 +3,9 @@
 
 This project demonstrates the deployment of a Linear Regression Machine Learning model using Streamlit. The model was trained in Google Colab and saved as a pickle file (`model.pkl`).
 
+## live project link
+https://linearregression-m5q486wrinerszuypzbzdq.streamlit.app/
+
 ## Features
 
 - Linear Regression Model
