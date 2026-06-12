@@ -50,10 +50,15 @@ if st.button("Predict Performance"):
         'Sample Question Papers Practiced': [papers_practiced]
     })
 
-    prediction = model.predict(input_data)
+    prediction = model.predict(input_data)[0]
 
-    performance = float(prediction[0])
+st.success(f"Predicted Performance Index: {prediction:.2f}")
 
-    st.success(
-        f"Predicted Performance Index: {performance:.2f}"
-    )
+if prediction >= 90:
+    st.info("Performance Level: Excellent")
+elif prediction >= 75:
+    st.info("Performance Level: Good")
+elif prediction >= 60:
+    st.info("Performance Level: Average")
+else:
+    st.info("Performance Level: Needs Improvement")
