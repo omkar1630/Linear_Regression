@@ -2,18 +2,24 @@ import streamlit as st
 import pickle
 import pandas as pd
 
-# Load model
+# Page Config
+st.set_page_config(
+    page_title="Student Performance Prediction",
+    page_icon="📚",
+    layout="centered"
+)
+
+# Load Model
 with open("model.pkl", "rb") as file:
     model = pickle.load(file)
 
-st.set_page_config(
-    page_title="Student Performance Prediction",
-    page_icon="📚"
+# Title
+st.title("📚 Student Performance Prediction")
+st.markdown(
+    "Enter the student details below and predict the **Performance Index**."
 )
 
-st.title("📚 Student Performance Prediction")
-st.write("Enter the student details below to predict the Performance Index.")
-
+# Inputs
 hours_studied = st.number_input(
     "Hours Studied",
     min_value=0.0,
@@ -41,24 +47,25 @@ papers_practiced = st.number_input(
     value=5
 )
 
+# Prediction Button
 if st.button("Predict Performance"):
 
     input_data = pd.DataFrame({
-        'Hours Studied': [hours_studied],
-        'Previous Scores': [previous_scores],
-        'Sleep Hours': [sleep_hours],
-        'Sample Question Papers Practiced': [papers_practiced]
+        "Hours Studied": [hours_studied],
+        "Previous Scores": [previous_scores],
+        "Sleep Hours": [sleep_hours],
+        "Sample Question Papers Practiced": [papers_practiced]
     })
 
     prediction = model.predict(input_data)[0]
 
-st.success(f"Predicted Performance Index: {prediction:.2f}")
+    st.success(f"🎯 Predicted Performance Index: {prediction:.2f}")
 
-if prediction >= 90:
-    st.info("Performance Level: Excellent")
-elif prediction >= 75:
-    st.info("Performance Level: Good")
-elif prediction >= 60:
-    st.info("Performance Level: Average")
-else:
-    st.info("Performance Level: Needs Improvement")
+    if prediction >= 90:
+        st.info("🏆 Performance Level: Excellent")
+    elif prediction >= 75:
+        st.info("👍 Performance Level: Good")
+    elif prediction >= 60:
+        st.info("📘 Performance Level: Average")
+    else:
+        st.info("📚 Performance Level: Needs Improvement")
